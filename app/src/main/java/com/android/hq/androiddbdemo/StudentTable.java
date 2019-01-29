@@ -7,9 +7,6 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
-/**
- * Created by heqiang on 2019/1/25.
- */
 
 public class StudentTable implements Table {
     private SchoolDatabase mSchoolDatabaseHelper;

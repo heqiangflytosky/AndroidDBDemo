@@ -5,9 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-/**
- * Created by heqiang on 2019/1/24.
- */
 
 public interface Table {
     void onCreate(SQLiteDatabase db);

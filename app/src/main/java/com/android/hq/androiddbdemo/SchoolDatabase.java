@@ -2,9 +2,6 @@ package com.android.hq.androiddbdemo;
 
 import android.content.Context;
 
-/**
- * Created by heqiang on 2019/1/24.
- */
 
 public class SchoolDatabase extends AbstractDatabase {
     private static final String DB_NAME = "school.db";

@@ -12,9 +12,6 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by heqiang on 2019/1/24.
- */
 
 public class DemoProvider extends ContentProvider {
     public static final String AUTHORITY = "com.android.hq";
@@ -29,6 +26,7 @@ public class DemoProvider extends ContentProvider {
     public boolean onCreate() {
         // 添加该provider中所有的表
         sDatabases.add(new SchoolDatabase(getContext()));
+        sDatabases.add(new CompanyDatabase(getContext()));
         for (AbstractDatabase database : sDatabases) {
             addTable(database.getTables());
         }

@@ -3,9 +3,6 @@ package com.android.hq.androiddbdemo;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-/**
- * Created by heqiang on 2019/1/24.
- */
 
 public class CompanyDatabase extends AbstractDatabase {
     private static final String DB_NAME = "company.db";
@@ -13,9 +10,11 @@ public class CompanyDatabase extends AbstractDatabase {
 
     private Context mContext;
 
-    public CompanyDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public CompanyDatabase(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
         mContext = context;
+        // 添加该数据库包含的所有表
+        addTable(new RDCenterTable(this));
     }
 
     public Context getContext() {

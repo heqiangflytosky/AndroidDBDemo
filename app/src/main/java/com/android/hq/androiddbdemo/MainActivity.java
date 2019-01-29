@@ -71,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
         teacherLi.put(TeacherTable.Columns.SENIORITY, 5);
         teacherLi.put(TeacherTable.Columns.UPDATE_TIME, System.currentTimeMillis());
 
+        final ContentValues engineer1 = new ContentValues();
+        engineer1.put(RDCenterTable.Columns._ID, 666666);
+        engineer1.put(RDCenterTable.Columns.NAME, "HQ");
+        engineer1.put(RDCenterTable.Columns.SENIORITY, 5);
+        engineer1.put(RDCenterTable.Columns.UPDATE_TIME, System.currentTimeMillis());
+
 
         new Thread(new Runnable() {
             @Override
@@ -91,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     getContentResolver().applyBatch(uri.getAuthority(), ops);
 
                     getContentResolver().insert(TeacherTable.URI_TEACHER, teacherLi);
+
+                    getContentResolver().insert(RDCenterTable.URI_TEACHER, engineer1);
                 } catch (Exception e) {
                     Log.d("Test", "doApplyOperations error!", e);
                 }
