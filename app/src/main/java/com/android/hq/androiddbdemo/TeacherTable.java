@@ -8,60 +8,55 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
 /**
- * Created by heqiang on 2019/1/25.
+ * Created by heqiang on 2019/1/29.
  */
 
-public class StudentTable implements Table {
+public class TeacherTable implements Table {
     private SchoolDatabase mSchoolDatabaseHelper;
 
-    public static final String TABLE_NAME = "student";
-    public static final int MATCH_STUDENT = 101;
+    public static final String TABLE_NAME = "teacher";
+    public static final int MATCH_TEACHER = 201;
 
-    public static final String URI_PATH_STUDENT = "student";
-
-    public static Uri URI_STUDENT = DemoProvider.AUTHORITY_URI.buildUpon().appendPath(URI_PATH_STUDENT).build();
+    public static final String URI_PATH_TEACHER = "teacher";
+    public static Uri URI_TEACHER = DemoProvider.AUTHORITY_URI.buildUpon().appendPath(URI_PATH_TEACHER).build();
 
     static {
-        DemoProvider.addMatchURI(URI_PATH_STUDENT, MATCH_STUDENT);
+        DemoProvider.addMatchURI(URI_PATH_TEACHER, MATCH_TEACHER);
     }
 
     public interface Columns extends BaseColumns {
         String NAME = "name";
         String GENDER = "gender";
-        String GRADE = "grade";
-        String CLASS = "class";
         String COUNTRY = "country";
-        String PROVINCE = "province";
-        String SPECIALTY = "specialty";
-        String IS_BOARDER = "is_boarder";
+        String SENIORITY = "seniority";
+        String UPDATE_TIME = "update_time";
     }
 
-    private static final String CREATE_TAB_STUDENTS =
+    private static final String CREATE_TAB_TEACHERS =
             "CREATE TABLE " + TABLE_NAME
                     + "("
-                    + Columns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + Columns.NAME + " TEXT,"
-                    + Columns.GENDER + " TEXT,"
-                    + Columns.GRADE +  " INTEGER,"
-                    + Columns.CLASS + " INTEGER,"
-                    + Columns.COUNTRY + " TEXT,"
-                    + Columns.PROVINCE + " TEXT,"
-                    + Columns.SPECIALTY + " TEXT,"
-                    + Columns.IS_BOARDER + " INTEGER"
+                    + TeacherTable.Columns._ID + " INTEGER PRIMARY KEY,"
+                    + TeacherTable.Columns.NAME + " TEXT,"
+                    + TeacherTable.Columns.GENDER + " TEXT,"
+                    + TeacherTable.Columns.COUNTRY + " TEXT,"
+                    + TeacherTable.Columns.UPDATE_TIME + " INTEGER,"
+                    + TeacherTable.Columns.SENIORITY + " INTEGER"
                     + ");";
 
-    public StudentTable(@NonNull SchoolDatabase database) {
+    public TeacherTable(@NonNull SchoolDatabase database) {
         mSchoolDatabaseHelper = database;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TAB_STUDENTS);
+        db.execSQL(CREATE_TAB_TEACHERS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion < 2) {
+            db.execSQL(CREATE_TAB_TEACHERS);
+        }
     }
 
     @Override
@@ -91,6 +86,6 @@ public class StudentTable implements Table {
 
     @Override
     public boolean respond(int matchCode) {
-        return matchCode == MATCH_STUDENT;
+        return matchCode == MATCH_TEACHER;
     }
 }

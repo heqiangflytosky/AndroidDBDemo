@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,14 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
         final ContentValues xiaoling = new ContentValues();
 
-        xiaoling.put(StudentTable.Columns.NAME,"XiaoMing");
+        xiaoling.put(StudentTable.Columns.NAME,"XiaoLing");
         xiaoling.put(StudentTable.Columns.GENDER,"male");
-        xiaoling.put(StudentTable.Columns.GRADE,1);
-        xiaoling.put(StudentTable.Columns.CLASS,1);
-        xiaoling.put(StudentTable.Columns.COUNTRY,"China");
+        xiaoling.put(StudentTable.Columns.GRADE,2);
+        xiaoling.put(StudentTable.Columns.CLASS,3);
+        xiaoling.put(StudentTable.Columns.COUNTRY,"USA");
         //xiaoling.put(StudentTable.Columns.PROVINCE,null);
-        xiaoling.put(StudentTable.Columns.SPECIALTY,"swimming");
+        xiaoling.put(StudentTable.Columns.SPECIALTY,"draw");
         xiaoling.put(StudentTable.Columns.IS_BOARDER,true);
+
+
+        final ContentValues teacherLi = new ContentValues();
+        teacherLi.put(TeacherTable.Columns._ID, 100001);
+        teacherLi.put(TeacherTable.Columns.NAME, "LiHua");
+        teacherLi.put(TeacherTable.Columns.SENIORITY, 5);
+        teacherLi.put(TeacherTable.Columns.UPDATE_TIME, System.currentTimeMillis());
 
 
         new Thread(new Runnable() {
@@ -81,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     getContentResolver().applyBatch(uri.getAuthority(), ops);
+
+                    getContentResolver().insert(TeacherTable.URI_TEACHER, teacherLi);
                 } catch (Exception e) {
                     Log.d("Test", "doApplyOperations error!", e);
                 }

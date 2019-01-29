@@ -24,9 +24,6 @@ public class DemoProvider extends ContentProvider {
     private static List<AbstractDatabase> sDatabases = new ArrayList<>();
 
     static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        URI_MATCHER.addURI(AUTHORITY, StudentTable.TABLE_NAME, StudentTable.MATCH_STUDENT);
-    }
 
     @Override
     public boolean onCreate() {
@@ -36,6 +33,10 @@ public class DemoProvider extends ContentProvider {
             addTable(database.getTables());
         }
         return true;
+    }
+
+    public static void addMatchURI(String path, int code) {
+        URI_MATCHER.addURI(AUTHORITY, path, code);
     }
 
     @Nullable

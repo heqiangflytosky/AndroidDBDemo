@@ -8,7 +8,7 @@ import android.content.Context;
 
 public class SchoolDatabase extends AbstractDatabase {
     private static final String DB_NAME = "school.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     private Context mContext;
 
@@ -17,6 +17,7 @@ public class SchoolDatabase extends AbstractDatabase {
         mContext = context;
         // 添加该数据库包含的所有表
         addTable(new StudentTable(this));
+        addTable(new TeacherTable(this));
     }
 
     public Context getContext() {
