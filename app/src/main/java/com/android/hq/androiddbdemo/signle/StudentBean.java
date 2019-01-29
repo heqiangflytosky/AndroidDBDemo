@@ -1,4 +1,4 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.signle;
 
 /**
  * Created by heqiang on 17-9-1.

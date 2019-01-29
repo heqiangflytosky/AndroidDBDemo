@@ -16,9 +16,9 @@
             </intent-filter>
         </activity>
         <provider
-            android:name=".StudentProvider"
+            android:name=".DemoProvider"
             android:authorities="com.android.hq"
-            android:exported="false" >
+            android:exported="true" >
 
         </provider>
     </application>

@@ -1,15 +1,19 @@
 package com.android.hq.androiddbdemo;
 
 import android.content.AsyncQueryHandler;
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.lang.reflect.Array;
+import com.android.hq.androiddbdemo.signle.DBOpenHelper;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mQueryHandler = new MyQueryHandler(getContentResolver());
-        getContentResolver().registerContentObserver(StudentProvider.StudentUri.URI_STUDENTS, true, mObserver);
+        //getContentResolver().registerContentObserver(StudentProvider.StudentUri.URI_STUDENTS, true, mObserver);
+        getContentResolver().registerContentObserver(StudentTable.URI_STUDENT, true, mObserver);
     }
 
     @Override
@@ -35,57 +40,76 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addStudents(){
-        final ArrayList<StudentBean> list = new ArrayList();
-        StudentBean xiaoMing = new StudentBean();
-        xiaoMing.setName("XiaoMing");
-        xiaoMing.setGender("male");
-        xiaoMing.setGrade(1);
-        xiaoMing.setCls(1);
-        xiaoMing.setBoarder(true);
-        xiaoMing.setCountry("China");
-        xiaoMing.setSpecialty("swimming");
-        list.add(xiaoMing);
 
-        StudentBean xiaoLing = new StudentBean();
-        xiaoLing.setName("XiaoLing");
-        xiaoLing.setGender("female");
-        xiaoLing.setGrade(1);
-        xiaoLing.setCls(1);
-        xiaoLing.setBoarder(false);
-        xiaoLing.setCountry("China");
-        xiaoLing.setSpecialty("painting");
-        list.add(xiaoLing);
+        final ContentValues xiaoming = new ContentValues();
+
+        xiaoming.put(StudentTable.Columns.NAME,"XiaoMing");
+        xiaoming.put(StudentTable.Columns.GENDER,"male");
+        xiaoming.put(StudentTable.Columns.GRADE,1);
+        xiaoming.put(StudentTable.Columns.CLASS,1);
+        xiaoming.put(StudentTable.Columns.COUNTRY,"China");
+        //xiaoming.put(StudentTable.Columns.PROVINCE,null);
+        xiaoming.put(StudentTable.Columns.SPECIALTY,"swimming");
+        xiaoming.put(StudentTable.Columns.IS_BOARDER,true);
+
+        final ContentValues xiaoling = new ContentValues();
+
+        xiaoling.put(StudentTable.Columns.NAME,"XiaoMing");
+        xiaoling.put(StudentTable.Columns.GENDER,"male");
+        xiaoling.put(StudentTable.Columns.GRADE,1);
+        xiaoling.put(StudentTable.Columns.CLASS,1);
+        xiaoling.put(StudentTable.Columns.COUNTRY,"China");
+        //xiaoling.put(StudentTable.Columns.PROVINCE,null);
+        xiaoling.put(StudentTable.Columns.SPECIALTY,"swimming");
+        xiaoling.put(StudentTable.Columns.IS_BOARDER,true);
+
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DBOpenHelper.getInstance().saveStudent(list);
+                Uri uri = StudentTable.URI_STUDENT;
+
+                ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+
+                ContentProviderOperation operation = ContentProviderOperation
+                        .newInsert(uri).withValues(xiaoming).build();
+                ops.add(operation);
+
+                ContentProviderOperation operation2 = ContentProviderOperation
+                        .newInsert(uri).withValues(xiaoling).build();
+                ops.add(operation2);
+
+                try {
+                    getContentResolver().applyBatch(uri.getAuthority(), ops);
+                } catch (Exception e) {
+                    Log.d("Test", "doApplyOperations error!", e);
+                }
             }
         }).start();
 
-        StudentBean James = new StudentBean();
-        James.setName("James");
-        James.setGender("male");
-        James.setGrade(1);
-        James.setCls(1);
-        James.setBoarder(false);
-        James.setCountry("USA");
-        James.setSpecialty("basketball");
-
-        mQueryHandler.startInsert(0 ,0 ,StudentProvider.StudentUri.URI_STUDENTS, DBOpenHelper.StudentTAB.parseContentValue(James));
-
-        mQueryHandler.startQuery(0 ,0 ,StudentProvider.StudentUri.URI_STUDENTS,
-                new String []{DBOpenHelper.StudentTAB.NAME},
-                DBOpenHelper.StudentTAB.COUNTRY + "=? AND " + DBOpenHelper.StudentTAB.GENDER + "=?",
-                new String []{"China", "male"},
-                null);
+//        StudentBean James = new StudentBean();
+//        James.setName("James");
+//        James.setGender("male");
+//        James.setGrade(1);
+//        James.setCls(1);
+//        James.setBoarder(false);
+//        James.setCountry("USA");
+//        James.setSpecialty("basketball");
+//
+//        mQueryHandler.startInsert(0 ,0 ,StudentProvider.StudentUri.URI_STUDENTS, DBOpenHelper.StudentTAB.parseContentValue(James));
+//
+//        mQueryHandler.startQuery(0 ,0 ,StudentProvider.StudentUri.URI_STUDENTS,
+//                new String []{DBOpenHelper.StudentTAB.NAME},
+//                DBOpenHelper.StudentTAB.COUNTRY + "=? AND " + DBOpenHelper.StudentTAB.GENDER + "=?",
+//                new String []{"China", "male"},
+//                null);
     }
 
     private ContentObserver mObserver = new ContentObserver(null) {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            mQueryHandler.startQuery(0,0,StudentProvider.StudentUri.URI_STUDENTS, null, null, null,null);
+            mQueryHandler.startQuery(0,0,StudentTable.URI_STUDENT, null, null, null,null);
         }
     };
 

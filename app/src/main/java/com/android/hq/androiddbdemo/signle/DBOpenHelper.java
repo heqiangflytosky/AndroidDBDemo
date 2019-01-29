@@ -1,4 +1,4 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.signle;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;

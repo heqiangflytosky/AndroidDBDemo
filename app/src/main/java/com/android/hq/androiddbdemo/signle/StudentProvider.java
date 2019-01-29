@@ -1,4 +1,4 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.signle;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -16,7 +16,7 @@ import android.support.annotation.Nullable;
  */
 
 public class StudentProvider extends SQLiteContentProvider {
-    public static final String AUTHORITY = "com.android.hq";
+    public static final String AUTHORITY = "com.android.hq.test";
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
     public static final String PARAM_GROUP_BY = "groupBy";
     public static final String PARAM_LIMIT = "limit";
