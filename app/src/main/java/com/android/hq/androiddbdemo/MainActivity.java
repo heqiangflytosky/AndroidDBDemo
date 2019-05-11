@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.android.hq.androiddbdemo.signle.DBOpenHelper;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -130,6 +131,46 @@ public class MainActivity extends AppCompatActivity {
             mQueryHandler.startQuery(0,0,StudentTable.URI_STUDENT, null, null, null,null);
         }
     };
+
+    public void testGetInfo(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = getContentResolver().query(DemoProvider.AUTHORITY_URI.buildUpon().appendEncodedPath("common/get_info/James").build(),
+                        null,null,null,null);
+                if(cursor != null) {
+                    while (cursor.moveToNext()) {
+                        String name = cursor.getString(cursor.getColumnIndex("name"));
+                        int id = cursor.getInt(cursor.getColumnIndex("id"));
+                        int age = cursor.getInt(cursor.getColumnIndex("age"));
+                        Log.e("Test","name = "+name+",id="+id+",age="+age);
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public void testMethod(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bundle bundle = new Bundle();
+                bundle.putString("testKey","testValue");
+                Bundle result = getContentResolver().call(DemoProvider.AUTHORITY_URI,"testMethod","testArg",bundle);
+                Log.e("Test",result.toString());
+            }
+        }).start();
+
+    }
+
+    public void testOpenFile(View view) {
+        try {
+            getContentResolver().openFileDescriptor(DemoProvider.AUTHORITY_URI.buildUpon()
+                    .appendEncodedPath("test_file").build(),"r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static class MyQueryHandler extends AsyncQueryHandler{
 

@@ -4,11 +4,15 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +28,10 @@ public class DemoProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        // 添加该provider中所有的表
+        // 添加该provider中所有的数据库，以及所有数据库中的表
         sDatabases.add(new SchoolDatabase(getContext()));
         sDatabases.add(new CompanyDatabase(getContext()));
+        sDatabases.add(new CommonDatabase(getContext()));
         for (AbstractDatabase database : sDatabases) {
             addTable(database.getTables());
         }
@@ -99,6 +104,44 @@ public class DemoProvider extends ContentProvider {
             }
         }
         return 0;
+    }
+
+    /**
+     * 测试 方法调用
+     * @param method
+     * @param arg
+     * @param extras
+     * @return
+     */
+    @Nullable
+    @Override
+    public Bundle call(@NonNull String method, @Nullable String arg, @Nullable Bundle extras) {
+        switch (method){
+            case "testMethod":
+                Bundle bundle = new Bundle();
+                bundle.putString("testResult","testValue");
+                return  bundle;
+        }
+        return super.call(method, arg, extras);
+    }
+
+    /**
+     * 测试打开文件
+     * @param uri
+     * @param mode
+     * @return
+     * @throws FileNotFoundException
+     */
+    @Nullable
+    @Override
+    public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
+        return super.openFile(uri, mode);
+    }
+
+    @Nullable
+    @Override
+    public AssetFileDescriptor openAssetFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
+        return super.openAssetFile(uri, mode);
     }
 
     private static void addTable(List<Table> tables) {
