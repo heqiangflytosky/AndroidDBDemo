@@ -33,4 +33,14 @@
         android:layout_height="wrap_content"
         android:text="测试打开文件"
         android:onClick="testOpenFile"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试SqlBrite添加数据"
+        android:onClick="testSqlBriteAdd"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试SqlBrite查询数据"
+        android:onClick="testSqlBriteQuery"/>
 </LinearLayout>

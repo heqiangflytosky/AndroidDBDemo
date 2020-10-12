@@ -17,6 +17,8 @@ import com.android.hq.androiddbdemo.multi.RDCenterTable;
 import com.android.hq.androiddbdemo.multi.StudentTable;
 import com.android.hq.androiddbdemo.multi.TeacherTable;
 import com.android.hq.androiddbdemo.single.DBOpenHelper;
+import com.android.hq.androiddbdemo.sqlbrite.DataSource;
+import com.facebook.stetho.Stetho;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         mQueryHandler = new MyQueryHandler(getContentResolver());
@@ -166,6 +169,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void testSqlBrite() {
+
+    }
+
     public void testOpenFile(View view) {
         try {
             getContentResolver().openFileDescriptor(DemoProvider.AUTHORITY_URI.buildUpon()
@@ -173,6 +180,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void testSqlBriteAdd(View view) {
+        DataSource.getInstance(this).saveData();
+    }
+
+    public void testSqlBriteQuery(View view) {
+        DataSource.getInstance(this).queryData();
     }
 
     private static class MyQueryHandler extends AsyncQueryHandler{
