@@ -1,4 +1,4 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.multi;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -28,6 +28,10 @@ public class ConfigTable implements Table {
 
     }
 
+    /**
+     *测试 MatrixCursor 的使用
+     * @return
+     */
     @Override
     public Cursor query(int matchCode, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (matchCode) {

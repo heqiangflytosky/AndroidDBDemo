@@ -7,13 +7,16 @@ import android.content.ContentValues;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.hq.androiddbdemo.signle.DBOpenHelper;
+import com.android.hq.androiddbdemo.multi.DemoProvider;
+import com.android.hq.androiddbdemo.multi.RDCenterTable;
+import com.android.hq.androiddbdemo.multi.StudentTable;
+import com.android.hq.androiddbdemo.multi.TeacherTable;
+import com.android.hq.androiddbdemo.single.DBOpenHelper;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

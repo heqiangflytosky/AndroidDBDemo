@@ -1,4 +1,4 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.multi;
 
 import android.content.ContentValues;
 import android.database.Cursor;

@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.android.hq.androiddbdemo.signle;
+package com.android.hq.androiddbdemo.single;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;

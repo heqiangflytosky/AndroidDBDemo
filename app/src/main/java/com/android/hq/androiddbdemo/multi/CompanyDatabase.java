@@ -1,7 +1,6 @@
-package com.android.hq.androiddbdemo;
+package com.android.hq.androiddbdemo.multi;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 
 public class CompanyDatabase extends AbstractDatabase {

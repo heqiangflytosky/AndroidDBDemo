@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:name=".DemoProvider"
+            android:name=".multi.DemoProvider"
             android:authorities="com.android.hq"
             android:exported="true" >
 
