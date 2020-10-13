@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testSqlBriteQuery(View view) {
-        DataSource.getInstance(this).queryData();
+        DataSource.getInstance(this).queryData1();
     }
 
     private static class MyQueryHandler extends AsyncQueryHandler{

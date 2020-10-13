@@ -9,4 +9,4 @@ Android 创建和操作数据库示例
  - AsyncQueryHandler 的使用
  - 如何创建多库多表
  - MatrixCursor 的使用(Config Table)
- - SqlBrite2 + SQLiteOpenHelper 的使用
+ - SqlBrite2 + SQLiteOpenHelper、SqlBrite2 + ContentResolver 的使用
